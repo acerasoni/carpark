@@ -1,6 +1,8 @@
 package com.acerasoni.carpark.carpark;
 
-import com.acerasoni.carpark.carpark.service.CarGenerator;
+import com.acerasoni.carpark.carpark.service.BillingService;
+import com.acerasoni.carpark.carpark.service.EntryService;
+import com.acerasoni.carpark.carpark.service.ExitService;
 import com.acerasoni.carpark.carpark.service.ParkingService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -13,8 +15,10 @@ import reactor.core.scheduler.Schedulers;
 @AllArgsConstructor
 public class CarparkApplication implements CommandLineRunner {
 
-    private final CarGenerator carArrivalService;
+    private final EntryService entryService;
     private final ParkingService parkingService;
+    private final ExitService exitService;
+    private final BillingService billingService;
 
     public static void main(final String[] args) {
         SpringApplication.run(CarparkApplication.class, args);
@@ -22,18 +26,13 @@ public class CarparkApplication implements CommandLineRunner {
 
     @Override
     public void run(final String... args) {
-//        carArrivalService.simulateCarArrivals().subscribeOn(Schedulers.parallel()).subscribe(this::onEvent);
-//
-//        Flux.interval(Duration.ofMillis(10))
-//                .onBackpressureBuffer(100, aLong ->
-//                        System.out.println("Full LOL :  " + aLong), BufferOverflowStrategy.DROP_LATEST)
-//                .log()
-////                .concatMap(x -> Mono.delay(Duration.ofMillis(100)))
-//                .map(id -> new CarArrivalEvent(id, Instant.now()))
-////                .blockLast()
-//                .subscribe(this::onEvent);
+        entryService.generateCars()
+                .subscribeOn(Schedulers.parallel())
+                .subscribe(parkingService::parkCar);
+        exitService.departCars()
+                .subscribeOn(Schedulers.parallel())
+                .subscribe(billingService::billCar);
 
-        carArrivalService.generateCars().subscribeOn(Schedulers.parallel()).subscribe(parkingService::parkCar);
         try {
             Thread.sleep(100000);
         } catch (InterruptedException e) {

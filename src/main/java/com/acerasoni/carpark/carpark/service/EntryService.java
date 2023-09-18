@@ -9,11 +9,11 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 @Service
-public class CarGenerator {
+public class EntryService {
 
-    private long delay;
+    private final long delay;
 
-    public CarGenerator(@Value("${carpark.arrival-delay-millis}") long delay) {
+    public EntryService(@Value("${carpark.arrival-delay-millis}") long delay) {
         this.delay = delay;
     }
 
