@@ -1,4 +1,4 @@
-package com.acerasoni.carpark.carpark.model;
+package com.acerasoni.carpark.model;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

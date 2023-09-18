@@ -1,8 +1,8 @@
-package com.acerasoni.carpark.carpark.exception;
+package com.acerasoni.carpark.exception;
 
 public final class CarparkException extends RuntimeException {
 
-    public CarparkException(String errorMessage) {
+    public CarparkException(final String errorMessage) {
         super(errorMessage);
     }
 }

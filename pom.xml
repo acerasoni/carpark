@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.acerasoni.carpark</groupId>
+    <groupId>com.acerasoni</groupId>
     <artifactId>carpark</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>carpark</name>
