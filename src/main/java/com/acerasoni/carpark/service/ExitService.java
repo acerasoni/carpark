@@ -1,7 +1,6 @@
 package com.acerasoni.carpark.service;
 
 import com.acerasoni.carpark.model.Car;
-import com.acerasoni.carpark.util.FormatterUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,19 +18,19 @@ public class ExitService {
 
     @Value("${car.departure-delay-millis}")
     private long departureDelay;
-    @Value("${date-format}")
-    private String dateFormat;
 
+    private final FormattingService formattingService;
     private final Sinks.Many<Car> carPark;
 
     public Flux<Car> generateExitQueue() {
+        log.info("Beginning the generation of a car exit queue");
         return carPark
                 .asFlux()
                 .delayElements(Duration.ofMillis(departureDelay))
                 .map((Car car) -> {
                     final var departureTime = Instant.now();
                     car.setDepartureTime(departureTime);
-                    log.debug("Car {} departed at '{}'.", car.getId(), FormatterUtil.formatInstant(departureTime, dateFormat));
+                    log.debug("Car {} departed at '{}'.", car.getId(), formattingService.formatInstant(departureTime));
                     return car;
                 });
     }

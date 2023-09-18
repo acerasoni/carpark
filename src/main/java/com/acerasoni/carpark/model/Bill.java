@@ -1,4 +1,4 @@
 package com.acerasoni.carpark.model;
 
-public record Bill(double pennies) {
+public record Bill(double amount) {
 }

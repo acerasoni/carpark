@@ -20,6 +20,7 @@
 
         <lombok.version>1.18.28</lombok.version>
         <reactor-core.version>3.5.10</reactor-core.version>
+        <junit.version>5.9.2</junit.version>
     </properties>
 
     <dependencies>
@@ -39,10 +40,10 @@
             <version>${reactor-core.version}</version>
         </dependency>
 
-        <!-- Test -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

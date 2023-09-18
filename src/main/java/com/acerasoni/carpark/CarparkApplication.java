@@ -13,7 +13,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 import java.util.concurrent.TimeUnit;
 
-//TODO: Testing https://www.baeldung.com/spring-webflux-backpressure
 @ComponentScan(basePackages = "com.acerasoni.carpark")
 @RequiredArgsConstructor
 @Slf4j
