@@ -9,8 +9,7 @@ import java.util.Objects;
 public class BillingService {
 
     public void billCar(final Car car) {
-        System.out.println("Car departed " + car.getId());
-//        Objects.requireNonNull(car.getArrivalTime());
-//        Objects.requireNonNull(car.getDepartureTime());
+        Objects.requireNonNull(car.getArrivalTime());
+        Objects.requireNonNull(car.getDepartureTime());
     }
 }
