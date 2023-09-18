@@ -52,7 +52,7 @@ public class CarparkApplication implements CommandLineRunner {
         }
 
         final var revenueReport = billingService.generateRevenueReport();
-        log.info("Carpark was open for {} seconds. It hosted {} cars and generated {}.",
+        log.info("Carpark closed after {} seconds. It hosted {} cars and generated {}.",
                 simulationLengthSeconds,
                 revenueReport.numberOfCars(),
                 revenueReport.revenue()
