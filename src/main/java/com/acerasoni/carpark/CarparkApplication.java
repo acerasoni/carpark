@@ -1,6 +1,5 @@
 package com.acerasoni.carpark;
 
-import com.acerasoni.carpark.model.Car;
 import com.acerasoni.carpark.service.BillingService;
 import com.acerasoni.carpark.service.EntryService;
 import com.acerasoni.carpark.service.ExitService;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.ComponentScan;
-import reactor.core.publisher.Sinks;
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,7 +32,6 @@ public class CarparkApplication implements CommandLineRunner {
     private final ParkingService parkingService;
     private final ExitService exitService;
     private final BillingService billingService;
-    private final Sinks.Many<Car> carPark;
 
     public static void main(final String[] args) {
         SpringApplication.run(CarparkApplication.class, args);
@@ -55,6 +52,11 @@ public class CarparkApplication implements CommandLineRunner {
             Thread.currentThread().interrupt();
         }
 
-        log.info("Count {}", carPark.currentSubscriberCount());
+        final var revenueReport = billingService.generateRevenueReport();
+        log.info("Carpark was open for {} seconds. It hosted {} cars and generated {}.",
+                simulationLengthSeconds,
+                revenueReport.numberOfCars(),
+                revenueReport.revenue()
+        );
     }
 }
