@@ -1,7 +1,6 @@
 package com.acerasoni.carpark.service;
 
 import com.acerasoni.carpark.model.Car;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,15 +11,20 @@ import java.time.Duration;
 import java.time.Instant;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class ExitService {
 
-    @Value("${car.departure-delay-millis}")
-    private long departureDelay;
-
+    private final long departureDelay;
     private final FormattingService formattingService;
     private final Sinks.Many<Car> carPark;
+
+    public ExitService(@Value("${car.departure-delay-millis}") final long departureDelay,
+                       final FormattingService formattingService,
+                       final Sinks.Many<Car> carPark) {
+        this.departureDelay = departureDelay;
+        this.formattingService = formattingService;
+        this.carPark = carPark;
+    }
 
     public Flux<Car> generateExitQueue() {
         log.info("Beginning the generation of a car exit queue");

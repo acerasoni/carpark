@@ -2,6 +2,7 @@ package com.acerasoni.carpark.service;
 
 import com.acerasoni.carpark.exception.CarparkException;
 import com.acerasoni.carpark.model.Car;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Sinks;
@@ -9,17 +10,12 @@ import reactor.core.publisher.Sinks;
 import java.time.Instant;
 
 @Service
+@AllArgsConstructor
 @Slf4j
 public class ParkingService {
 
     private final Sinks.Many<Car> carPark;
     private final FormattingService formattingService;
-
-    public ParkingService(final Sinks.Many<Car> carPark,
-                          final FormattingService formattingService) {
-        this.carPark = carPark;
-        this.formattingService = formattingService;
-    }
 
     public void parkCar(final Car car) {
         switch (carPark.tryEmitNext(car)) {

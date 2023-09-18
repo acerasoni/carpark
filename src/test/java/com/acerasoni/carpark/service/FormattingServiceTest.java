@@ -13,31 +13,39 @@ class FormattingServiceTest {
     private static final String USD_CURRENCY_CODE = "USD";
 
     @Test
-    void formatInstantWithMilliseconds() {
+    void testFormatInstantWithMilliseconds() {
         final var pattern = "HH:mm:ss.SSSS";
 
-        assertEquals("23:39:48.5023", new FormattingService(pattern, GBP_CURRENCY_CODE).formatInstant(TEST_INSTANT));
+        assertEquals("23:39:48.5023",
+                new FormattingService(pattern, GBP_CURRENCY_CODE).formatInstant(TEST_INSTANT),
+                "Failed to format Instant with milliseconds");
     }
 
     @Test
-    void formatInstantWithoutMilliseconds() {
+    void testFormatInstantWithoutMilliseconds() {
         final var pattern = "HH:mm:ss";
 
-        assertEquals("23:39:48", new FormattingService(pattern, GBP_CURRENCY_CODE).formatInstant(TEST_INSTANT));
+        assertEquals("23:39:48",
+                new FormattingService(pattern, GBP_CURRENCY_CODE).formatInstant(TEST_INSTANT),
+                "Failed to format Instant without milliseconds");
     }
 
     @Test
-    void formatCurrencyWithGbpCurrency() {
+    void testFormatCurrencyWithGbpCurrency() {
         final var amount = 23452.122;
 
-        assertEquals("23,452.122", new FormattingService("HH:mm:ss", GBP_CURRENCY_CODE).formatCurrency(amount));
+        assertEquals("23,452.122",
+                new FormattingService("HH:mm:ss", GBP_CURRENCY_CODE).formatCurrency(amount),
+                "Failed to format amount to GBP"
+        );
     }
 
     @Test
-    void formatCurrencyWithUsdCurrency() {
+    void testFormatCurrencyWithUsdCurrency() {
         final var amount = 93761.968;
 
-        assertEquals("93,761.968", new FormattingService("HH:mm:ss", USD_CURRENCY_CODE).formatCurrency(amount));
-
+        assertEquals("93,761.968",
+                new FormattingService("HH:mm:ss", USD_CURRENCY_CODE).formatCurrency(amount),
+                "Failed to format amount to USD");
     }
 }
