@@ -37,20 +37,22 @@ Alternatively, you can run the application directly through a CLI using Spring-B
 
 Run with `logging.level.root=DEBUG` for enhanced logs.
 
+> When you run the application, all cars will be admitted until capacity is reached. Then, cars will begin to be rejected. When spaces free up from cars departing, some new cars will be accepted into the carpark. 
+
 ## Problem Statement
 
 - When a car comes in, check if there is a space available, otherwise return a message saying it is full.
 - There are 100 spaces available in the car park.
-- Multiple cars may come in at the same time
-- The solution must be similar to production code
+- Multiple cars may come in at the same time.
+- The solution must be similar to production code.
 
 ## Assumptions
 
 For the purpose of this simulation, I have made the following assumptions, which may be modified through the [application.properties](src/main/resources/application.properties).
 
-- A new car appears every 120 milliseconds
-- Cars stay parked for 150 milliseconds
-- The simulation lasts 20 seconds
+- New cars try to park every 120 milliseconds
+- Park cars depart after 500 milliseconds
+- The simulation lasts 60 seconds
 - The simulation is sped up by a factor of 7,200 (such that, in billing terms, 500 milliseconds equal 1 hour)
     > To run the simulation at normal speed, set `carpark.speed-up-factor=7200`
 - The currency is GBP
