@@ -17,7 +17,7 @@ public class FormattingService {
 
     public FormattingService(@Value("${date-format}") final String dateFormat,
                              @Value("${currency}") final String currency) {
-        this.currencyFormatter = NumberFormat.getInstance();
+        this.currencyFormatter = NumberFormat.getCurrencyInstance();
         this.currencyFormatter.setCurrency(Currency.getInstance(currency));
 
         this.instantFormatter = DateTimeFormatter

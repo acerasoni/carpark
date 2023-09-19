@@ -34,10 +34,11 @@ class ExitServiceTest {
                 .expectNext(carTwo);
 
         testSink.tryEmitNext(carThree);
+        testSink.tryEmitComplete();
 
         stepVerifier
                 .expectNext(carThree)
-                .thenCancel()
+                .expectComplete()
                 .verify();
     }
 }
