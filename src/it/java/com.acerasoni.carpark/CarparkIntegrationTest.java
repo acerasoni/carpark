@@ -7,6 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 class CarparkIntegrationTest {
 
     @Test
-    void contextLoads() {
+    void integrationTest() {
     }
 }

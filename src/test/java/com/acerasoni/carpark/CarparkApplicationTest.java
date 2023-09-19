@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
 import reactor.core.publisher.Flux;
@@ -48,6 +47,6 @@ class CarparkApplicationTest {
         verify(billingService).billCar(carOne);
         verify(billingService).billCar(carTwo);
 
-        assertTrue(output.getOut().contains("Carpark closed after 2 seconds. It hosted 3 cars and generated £50."));
+        assertTrue(output.getOut().contains("Carpark closed after 2 seconds. It hosted 3 cars and generated £50."), "Carpark closure message differs from expected value");
     }
 }

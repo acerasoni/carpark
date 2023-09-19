@@ -33,9 +33,9 @@ class ParkingServiceTest {
 
         parkingService.parkCar(car);
 
-        assertNotNull(car.getAdmissionTime());
-        assertNull(car.getDepartureTime());
-        assertNull(car.getBill());
+        assertNotNull(car.getAdmissionTime(), "Admission time is not expected to be null");
+        assertNull(car.getDepartureTime(), "Departure time is expected to be null");
+        assertNull(car.getBill(), "Bill expected to be null");
     }
 
     @Test
@@ -46,10 +46,10 @@ class ParkingServiceTest {
         parkingService.parkCar(carOne);
         parkingService.parkCar(carTwo);
 
-        assertTrue(output.getOut().contains("Unable to park car #1. The carpark is currently full."));
-        assertNull(carTwo.getAdmissionTime());
-        assertNull(carTwo.getDepartureTime());
-        assertNull(carTwo.getBill());
+        assertTrue(output.getOut().contains("Unable to park car #1. The carpark is currently full."), "Carpark rejection message is not equal to expected value");
+        assertNull(carTwo.getAdmissionTime(), "Admission time is expected to be null for non-parked cars");
+        assertNull(carTwo.getDepartureTime(), "Departure time is expected to be null for non-parked cars");
+        assertNull(carTwo.getBill(), "Bill is expected to be null for non-parked cars");
     }
 
     @Test
@@ -57,10 +57,10 @@ class ParkingServiceTest {
         testCarPark.tryEmitComplete();
 
         final var car = new Car(0L);
-        final CarparkException exception = assertThrows(CarparkException.class, () -> parkingService.parkCar(car));
-        assertEquals("Encountered unexpected error when attempting to park car #0", exception.getMessage());
-        assertNull(car.getAdmissionTime());
-        assertNull(car.getDepartureTime());
-        assertNull(car.getBill());
+        final CarparkException exception = assertThrows(CarparkException.class, () -> parkingService.parkCar(car), "CarparkException is expected to be thrown");
+        assertEquals("Encountered unexpected error when attempting to park car #0", exception.getMessage(), "CarparkException message does not equal expected value");
+        assertNull(car.getAdmissionTime(), "Admission time is expected to be null for non-parked cars");
+        assertNull(car.getDepartureTime(), "Departure time is expected to be null for non-parked cars");
+        assertNull(car.getBill(), "Bill is expected to be null for non-parked cars");
     }
 }

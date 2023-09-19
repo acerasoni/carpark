@@ -47,29 +47,29 @@ class BillingServiceTest {
 
         billingService.billCar(car);
         verify(formattingService).formatCurrency(TEST_HOURLY_RATE);
-        assertEquals(expectedBill, car.getBill());
-        assertEquals(1, billRegister.size());
-        assertTrue(billRegister.contains(expectedBill));
+        assertEquals(expectedBill, car.getBill(), "Bill differs from expected value");
+        assertEquals(1, billRegister.size(), "Bill register size differs from expected value");
+        assertTrue(billRegister.contains(expectedBill), "Bill register does not contain expected bill");
     }
 
     @Test
     void billCar_whenArrivalTimeIsNull_thenThrowException() {
         final var car = new Car(0L);
         car.setDepartureTime(Instant.now());
-        assertThrows(NullPointerException.class, () -> billingService.billCar(car));
+        assertThrows(NullPointerException.class, () -> billingService.billCar(car), "Exception is not thrown when arrival time is null");
     }
 
     @Test
     void billCar_whenDepartureTimeIsNull_thenThrowException() {
         final var car = new Car(0L);
         car.setAdmissionTime(Instant.now());
-        assertThrows(NullPointerException.class, () -> billingService.billCar(car));
+        assertThrows(NullPointerException.class, () -> billingService.billCar(car), "Exception is not thrown when departure time is null");
     }
 
     @Test
     void generateRevenueReport_whenBillRegisterIsEmpty_thenGenerateEmptyRevenueReport() {
         final var testReport = billingService.generateRevenueReport();
-        assertEquals(0L, testReport.numberOfCars());
+        assertEquals(0L, testReport.numberOfCars(), "Number of cars differs from expected value 0");
         verify(formattingService).formatCurrency(0);
     }
 
@@ -79,7 +79,7 @@ class BillingServiceTest {
         billRegister.add(new Bill(32));
         billRegister.add(new Bill(95));
         final var testReport = billingService.generateRevenueReport();
-        assertEquals(3L, testReport.numberOfCars());
+        assertEquals(3L, testReport.numberOfCars(), "Number of cars differs from expected value 3");
         verify(formattingService).formatCurrency(142);
     }
 }
