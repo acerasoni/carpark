@@ -35,6 +35,8 @@ Alternatively, you can run the application directly through a CLI using Spring-B
 ./mvnw spring-boot:run
 ```
 
+Run with `logging.level.root=DEBUG` for enhanced logs.
+
 ## Problem Statement
 
 - When a car comes in, check if there is a space available, otherwise return a message saying it is full.
