@@ -6,7 +6,7 @@ Carpark is a highly concurrent parking application written in Java's [Project Re
 
 ### Rationale
 
-To model the carpark, I went with reactor's persistent store [Sinks.Many](https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Sinks.Many.html) backed by a bounded blocking double-ended queue (effectively non-blocking). I considered using the highly optimised cache provider [Caffeine](https://github.com/ben-manes/caffeine) as an alternative, which is concurrent, highly scalable, and provides near-optimal efficiency within the JVM. However, wanting to stay within the reactive ecosystem, I found Sinks.Many to be a perfect solution for modeling the carpark.
+To model the carpark, I chose reactor's persistent store [Sinks.Many](https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Sinks.Many.html) backed by a bounded blocking double-ended queue (effectively non-blocking). I considered using the highly optimised cache provider [Caffeine](https://github.com/ben-manes/caffeine) as an alternative, which is concurrent, highly scalable, and provides near-optimal efficiency within the JVM. However, wanting to stay within the reactive ecosystem, I found Sinks.Many to be a perfect solution for modeling the carpark.
 
 To model car arrivals and departures, I chose [Project Reactor](https://projectreactor.io/). I considered simpler alternatives such as imperative Java and Java8 streams, however reactor is best-in-class for highly concurrent publisher/consumer scenarios. For this project, car arrivals are modeled by publishing events, and car departures by consuming events. 
 
@@ -30,18 +30,18 @@ To model the bill register (where copies of `Bills` are stored once issues to `C
 You can run the application via an IDE. The IDE used for development and testing is [IntelliJ IDEA](https://www.jetbrains.com/idea/) version `2023.1.1 (Community Edition)`.
 > Main class: [CarparkApplication](src/main/java/com/acerasoni/carpark/CarparkApplication.java)
 
-Alternatively, you can run the application directly through a CLI using Spring-Boot's [Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins.html#build-tool-plugins.maven)
+Alternatively, you can run the application directly through a CLI using Spring-Boot's [Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins.html#build-tool-plugins.maven).
 ```bash
 ./mvnw spring-boot:run
 ```
 
-Run with `logging.level.root=DEBUG` for enhanced logs.
-
 > When you run the application, all cars will be admitted until capacity is reached. Then, cars will begin to be rejected. When spaces free up from cars departing, some new cars will be accepted into the carpark. 
+
+Run with `logging.level.root=DEBUG` for enhanced logs.
 
 ## Problem Statement
 
-- When a car comes in, check if there is a space available, otherwise return a message saying it is full.
+- When a car comes in, check if there is a space available, otherwise return a message saying that the car park is full.
 - There are 100 spaces available in the car park.
 - Multiple cars may come in at the same time.
 - The solution must be similar to production code.
@@ -50,16 +50,16 @@ Run with `logging.level.root=DEBUG` for enhanced logs.
 
 For the purpose of this simulation, I have made the following assumptions, which may be modified through the [application.properties](src/main/resources/application.properties).
 
-- New cars try to park every 120 milliseconds
-- Park cars depart after 500 milliseconds
-- The simulation lasts 60 seconds
+- New cars arrive at the car park every 120 milliseconds
+- Parked cars depart after 500 milliseconds
+- The simulation lasts for 60 seconds
 - The simulation is sped up by a factor of 7,200 (such that, in billing terms, 500 milliseconds equal 1 hour)
     > To run the simulation at normal speed, set `carpark.speed-up-factor=7200`
-- The currency is GBP
+- The currency is in GBP
 
 ## Extensions
 
-This application is built to be as similar as possible to a production-ready MVP. However, given more time, one could implement the following:
+This application is built to be as similar as possible to a production-ready MVP. However, given the time constraint, lots of useful features were excluded that could implemented on top of the existing project. These include:
 
 - Containerising the application for easy deployment
 - Use user input to simulate car arrivals for a more realistic feel
