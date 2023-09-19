@@ -6,18 +6,18 @@ Carpark is a highly concurrent parking application written in Java's [Project Re
 
 ### Rationale
 
-To model the carpark, I went with reactor's persistent store [Sinks.Many](https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Sinks.Many.html) backed by a bounded blocking double-ended queue (effectively non-blocking). I considered using the highly optimised cache provider [Caffeine](https://github.com/ben-manes/caffeine) as an alternative, which is concurrent, highly scalable, and provides near-optimal efficiency within the JVM. However, I preferred to stay within the reactive ecosystem.
+To model the carpark, I went with reactor's persistent store [Sinks.Many](https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Sinks.Many.html) backed by a bounded blocking double-ended queue (effectively non-blocking). I considered using the highly optimised cache provider [Caffeine](https://github.com/ben-manes/caffeine) as an alternative, which is concurrent, highly scalable, and provides near-optimal efficiency within the JVM. However, wanting to stay within the reactive ecosystem, I found Sinks.Many to be a perfect solution for modeling the carpark.
 
-To model car arrivals and departures, I chose [Project Reactor](https://projectreactor.io/). I considered simpler imperative Java and Java8 streams, but reactor is best-in-class for highly concurrent publisher/consumer scenarios. For this project, car arrivals are modeled by publishing events, and car departures by consuming events. 
+To model car arrivals and departures, I chose [Project Reactor](https://projectreactor.io/). I considered simpler alternatives such as imperative Java and Java8 streams, however reactor is best-in-class for highly concurrent publisher/consumer scenarios. For this project, car arrivals are modeled by publishing events, and car departures by consuming events. 
 
 Furthermore, Reactor: 
 
-- Allows for fast and scalable concurrency with minimal setup. 
+- Allows for fast and scalable concurrency with minimal configuration. 
 - Provides native [backpressure](https://www.baeldung.com/reactor-core#backpressure). 
-- Is easily testable via `reactor-testing library` (testing imperative multi-threaded programs is otherwise very difficult)
+- Is easily testable via `reactor-testing library` (testing imperative multi-threaded programs is otherwise very difficult).
 - Can be monitored for performance bottlenecks via [Reactor Metrics](https://projectreactor.io/docs/core/release/reference/#metrics).
 
-To model the bill register (where copies of `Bills` are stored once issues to `Cars`), I chose the fast and thread-safe Set implementation `java.util.concurrent.ConcurrentHashMap`
+To model the bill register (where copies of `Bills` are stored once issues to `Cars`), I chose the fast and thread-safe `java.util.Set` implementation `java.util.concurrent.ConcurrentHashMap`'s key-set.
 
 ### Architecture
 
@@ -25,10 +25,10 @@ To model the bill register (where copies of `Bills` are stored once issues to `C
 
 ## Run Instructions
 
-*Note*: this project requires a valid distribution of Java20, such as [OpenJDK](https://jdk.java.net/20/).
+*Note*: this project requires a Java20 JDK (such as [OpenJDK](https://jdk.java.net/20/)).
 
 You can run the application via an IDE. The IDE used for development and testing is [IntelliJ IDEA](https://www.jetbrains.com/idea/) version `2023.1.1 (Community Edition)`.
-> [CarparkApplication](src/main/java/com/acerasoni/carpark/CarparkApplication.java)
+> Main class: [CarparkApplication](src/main/java/com/acerasoni/carpark/CarparkApplication.java)
 
 Alternatively, you can run the application directly through a CLI using Spring-Boot's [Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins.html#build-tool-plugins.maven)
 ```bash
