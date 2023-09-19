@@ -54,7 +54,7 @@ For the purpose of this simulation, I have made the following assumptions, which
 - Parked cars depart after 500 milliseconds
 - The simulation lasts for 60 seconds
 - The simulation is sped up by a factor of 7,200 (such that, in billing terms, 500 milliseconds equal 1 hour)
-    > To run the simulation at normal speed, set `carpark.speed-up-factor=7200`
+    > To run the simulation at normal speed, set `carpark.speed-up-factor=1`
 - The currency is in GBP
 
 ## Extensions
