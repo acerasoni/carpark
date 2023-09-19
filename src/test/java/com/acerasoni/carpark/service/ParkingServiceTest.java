@@ -58,7 +58,7 @@ class ParkingServiceTest {
 
         final var car = new Car(0L);
         final CarparkException exception = assertThrows(CarparkException.class, () -> parkingService.parkCar(car));
-        assertEquals("Encountered unexpected error FAIL_TERMINATED when attempting to park car #0", exception.getMessage());
+        assertEquals("Encountered unexpected error when attempting to park car #0", exception.getMessage());
         assertNull(car.getAdmissionTime());
         assertNull(car.getDepartureTime());
         assertNull(car.getBill());

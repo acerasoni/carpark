@@ -26,8 +26,8 @@ public class ParkingService {
             }
             case FAIL_OVERFLOW, FAIL_ZERO_SUBSCRIBER ->
                     log.warn("Unable to park car #{}. The carpark is currently full.", car.getId());
-            case Sinks.EmitResult emitResult -> throw new CarparkException(
-                    String.format("Encountered unexpected error %s when attempting to park car #%s", emitResult, car.getId()));
+            default -> throw new CarparkException(
+                    String.format("Encountered unexpected error when attempting to park car #%s", car.getId()));
         }
     }
 }
