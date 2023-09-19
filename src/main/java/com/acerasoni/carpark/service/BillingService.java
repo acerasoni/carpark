@@ -33,9 +33,8 @@ public class BillingService {
     }
 
     public void billCar(final Car car) {
-        final var admissionTime = car.getAdmissionTime();
         final var departureTime = car.getDepartureTime();
-
+        final var admissionTime = car.getAdmissionTime();
         Objects.requireNonNull(admissionTime);
         Objects.requireNonNull(departureTime);
 

@@ -35,7 +35,7 @@ class FormattingServiceTest {
     }
 
     @Test
-    void formatCurrency_withGbpCurrency_thenFormatToCurrency() {
+    void formatCurrency_withGbpCurrency_thenFormatToGbp() {
         final var amount = 23452.122;
         formattingService = new FormattingService(PATTERN_WITH_MILLIS, GBP_CURRENCY_CODE);
 
@@ -46,7 +46,7 @@ class FormattingServiceTest {
     }
 
     @Test
-    void testFormatCurrencyWithUsdCurrency() {
+    void formatCurrency_withUsdCurrency_thenFormatToUsd() {
         final var amount = 93761.968;
         formattingService = new FormattingService(PATTERN_WITH_MILLIS, USD_CURRENCY_CODE);
 

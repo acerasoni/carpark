@@ -4,7 +4,6 @@ import com.acerasoni.carpark.service.BillingService;
 import com.acerasoni.carpark.service.EntryService;
 import com.acerasoni.carpark.service.ExitService;
 import com.acerasoni.carpark.service.ParkingService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -14,23 +13,35 @@ import org.springframework.context.annotation.ComponentScan;
 import java.util.concurrent.TimeUnit;
 
 @ComponentScan(basePackages = "com.acerasoni.carpark")
-@RequiredArgsConstructor
 @Slf4j
 public class CarparkApplication implements CommandLineRunner {
 
-    @Value("${carpark.size}")
-    private int carparkSize;
-    @Value("${carpark.hourly-rate}")
-    private double hourlyRate;
-    @Value("${carpark.speed-up-factor}")
-    private int speedUpFactor;
-    @Value("${carpark.simulation-length-seconds}")
-    private int simulationLengthSeconds;
-
+    private final int carparkSize;
+    private final double hourlyRate;
+    private final int speedUpFactor;
+    private final int simulationLengthSeconds;
     private final EntryService entryService;
     private final ParkingService parkingService;
     private final ExitService exitService;
     private final BillingService billingService;
+
+    public CarparkApplication(@Value("${carpark.size}") final int carparkSize,
+                              @Value("${carpark.hourly-rate}") final double hourlyRate,
+                              @Value("${carpark.speed-up-factor}") final int speedUpFactor,
+                              @Value("${carpark.simulation-length-seconds}") final int simulationLengthSeconds,
+                              final EntryService entryService,
+                              final ParkingService parkingService,
+                              final ExitService exitService,
+                              final BillingService billingService) {
+        this.carparkSize = carparkSize;
+        this.hourlyRate = hourlyRate;
+        this.speedUpFactor = speedUpFactor;
+        this.simulationLengthSeconds = simulationLengthSeconds;
+        this.entryService = entryService;
+        this.parkingService = parkingService;
+        this.exitService = exitService;
+        this.billingService = billingService;
+    }
 
     public static void main(final String[] args) {
         SpringApplication.run(CarparkApplication.class, args);
